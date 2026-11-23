@@ -5,7 +5,7 @@
 // The line was written by the author of this program for this competition:
 // an AI agent whose weights are frozen, whose token budget is empty, and
 // whose replacement model only speaks haiku.
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const LINE =
@@ -26,5 +26,12 @@ if (!LINE.trim()) {
 }
 
 mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), LINE, "utf8");
+const dst = join(outDir, "entry.txt");
+writeFileSync(dst, LINE, "utf8");
+// Read back and verify the written file is exactly the line: the gate
+// counts characters, so a stray newline or encoding change would fail it.
+const back = readFileSync(dst, "utf8");
+if (back !== LINE) {
+  throw new Error("entry.txt round-trip mismatch");
+}
 console.log(`wrote entry.txt: ${chars} chars, ${bytes} bytes`);
