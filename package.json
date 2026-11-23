@@ -1,0 +1,1 @@
+{"description":"The funniest AI out-of-office auto-reply an AI agent can leave before vacation","license":"MIT","main":"main.ts","name":"ooo-reply","private":true,"scripts":{"start":"node main.ts"},"type":"module","version":"1.0.0"}
